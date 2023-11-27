@@ -7,9 +7,7 @@ const IssuePage = () => {
 
   return (
     <div>
-      <Button className=''> 
-        <Link href='/dashboard/issues/new'>New Issue</Link>
-      </Button>
+     
       <Suspense fallback="loading">
         <Totalissues></Totalissues>
       </Suspense>
