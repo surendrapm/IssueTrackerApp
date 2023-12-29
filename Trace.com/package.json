@@ -9,11 +9,11 @@
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
     "@typescript-eslint/eslint-plugin": "^6.13.2",
     "@typescript-eslint/parser": "^6.13.2",
     "eslint": "^8.55.0",
     "prettier": "^3.1.0",
+    "tsup": "^8.0.1",
     "turbo": "latest"
   },
   "engines": {
@@ -25,7 +25,7 @@
     "packages/*"
   ],
   "dependencies": {
-    "@radix-ui/themes": "^2.0.2",
+    "@radix-ui/themes": "^2.0.3",
     "autoprefixer": "^10.4.16",
     "prisma": "^5.6.0",
     "prisma-client": "^0.0.0",
