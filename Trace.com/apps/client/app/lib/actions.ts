@@ -1,12 +1,15 @@
+
 import { NextRequest, NextResponse } from 'next/server'
-import prisma from "@/prisma/client";
-import { createIssueSchema } from '../.././app/validationSchemas';
+import { createIssueSchema } from '../validationSchemas';
+import prisma from '@repo/database';
+
 
 
 //creating issues
 export async function CreateIssue(request:NextRequest){
 
     const body =  await request.json();
+    console.log(body.title)
     const validation = createIssueSchema.safeParse(body);
     if(!validation.success){
      
@@ -21,6 +24,19 @@ export async function CreateIssue(request:NextRequest){
               console.log('successfully created issue')
        return NextResponse.json(newIssue,{status:201})
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //Reading a issues

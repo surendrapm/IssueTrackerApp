@@ -11,6 +11,7 @@
   "dependencies": {
     "@radix-ui/themes": "^2.0.2",
     "@repo/ui": "*",
+    "@repo/database": "*",
     "axios": "^1.6.2",
     "classnames": "^2.3.2",
     "next": "^14.0.3",
@@ -35,5 +36,6 @@
     "@repo/tailwind-config": "*",
     "tailwindcss": "^3.4.0",
     "typescript": "^5.2.2"
+    
   }
 }

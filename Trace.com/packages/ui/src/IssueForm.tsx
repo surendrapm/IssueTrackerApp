@@ -1,4 +1,4 @@
-
+"use client"
 
 import { TextField,Button,TextArea } from "@radix-ui/themes"
 import { useState } from "react"
@@ -13,29 +13,27 @@ interface IssueFormProps {
 }
 
 
-export  function IssueForm({ onSubmit }: IssueFormProps){
-         const[title,setTitle] = useState('')
-         const[description,setDescription] = useState('')
+export  function IssueForm({onSubmit}){
+ 
   return (
     <div className='max-w-xl space-y-3'>
+     <form 
+       className="max-w-xl space-y-3"
+       action={onSubmit}
+     >
      
-                <TextField.Root>
-                  <TextField.Input placeholder='Title'
-                   onChange={(e)=>{
-                      setTitle(e.target.value)
-                   }}
-                  />
-                </TextField.Root>
-                <TextArea placeholder="Description"
-                onChange={(e)=>{
-                  setDescription(e.target.value)
-               }}
+                  <input 
+                     placeholder='Title'
+                     name="title"
+                  
                 />
-                    <Button
-                     onClick={()=>{
-                            onSubmit(title,description)
-                     }}
-                    >Submit new Issue</Button>
+            
+                <input placeholder="Description"
+                    name="description"
+                />
+                    <Button type="submit">Submit new Issue</Button>
+     </form>
+               
 
       
 
