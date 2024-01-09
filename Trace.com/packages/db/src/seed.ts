@@ -14,7 +14,26 @@ const DEFAULT_ISSUES :DefaultIssue[]= [
     {
         title : 'UI',
         description:'center the div'
-    }
+    },
+    {
+      title : 'Database Connection Error',
+      description:'db error'
+  },{
+    title : 'Mobile App Compatiblity',
+    description:'center the div'
+  } ,
+    {
+    title : 'User FeedBack Collection',
+     description:'center the div'
+  } ,
+  {
+    title : 'security Vulnerbility',
+    description:'center the div'
+  },
+  {
+    title : 'User FeedBack Collection',
+    description:'center the div'
+  }
 ] ;
 
 (async () => {
