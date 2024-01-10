@@ -1,18 +1,15 @@
-
-import { Table } from '@radix-ui/themes'
-import prisma from '@repo/database'
+"use client"
 import React from 'react'
 import IssuesTable from '../../ui/IssuesTable'
 
 
-const layout = async() => {
 
-const issues = await prisma.issue.findMany()
 
-  return (
+const layout = ({children}:{children:React.ReactNode}) => {
+ return (
     <div> 
- 
-              <IssuesTable/>
+    {children}
+     
     </div>
     
   )
