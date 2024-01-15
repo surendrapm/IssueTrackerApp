@@ -49,8 +49,9 @@ export default async function IssuesTable({searchParams,issues}:Props) {
           {issues.map((issue) => (
             <Table.Row key={issue.id}>
               <Table.Cell>
-                <Link href={`/issues/${issue.id}`}>
+                <Link  href={`/issues/${issue.id}`}>
                   {issue.title}
+                  
                 </Link>
                 <div className="block md:hidden">
                   <IssueStatusBadge status={issue.status} />
@@ -66,7 +67,7 @@ export default async function IssuesTable({searchParams,issues}:Props) {
           ))}
         </Table.Body>
       </Table.Root>
-
+ 
   );
 }
 
@@ -74,13 +75,13 @@ export default async function IssuesTable({searchParams,issues}:Props) {
 const columns:{
   label:string,
   value: keyof Issue;
-  className?:string
-}[]=[
-  {label:'Issue',value:'title'},
+  className?: string;
+}[] = [
+  { label:'Issue',value:'title' },
   {
     label:'Status',
     value:'status',
-    className:'hiden md:table-cell'
+    className:'hidden md:table-cell'
   },
   {
     label: 'Created',
@@ -88,5 +89,5 @@ const columns:{
     className: 'hidden md:table-cell',
   }
 ]     
-      
+export const dynamic = 'force-dynamic';
 export const columnNames = columns.map(column => column.value)

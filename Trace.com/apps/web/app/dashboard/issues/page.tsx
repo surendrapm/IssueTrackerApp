@@ -1,9 +1,12 @@
-import React from 'react'
-import IssuesTable, { IssueQuery, columnNames } from '../../ui/IssuesTable'
-import prisma from '@repo/database'
-import Status from '@repo/database'
-import { Flex } from '@radix-ui/themes'
-import Pagination from '../../components/Pagination'
+import React from 'react';
+import IssuesTable, { IssueQuery, columnNames } from '../../ui/IssuesTable';
+import prisma from '@repo/database';
+import Status from '@repo/database';
+
+import Pagination from '../../components/Pagination';
+import { IssueActions } from '../../ui/IssueActions';
+import { Flex } from '@radix-ui/themes';
+
 
 interface Props{
   searchParams:IssueQuery
@@ -28,8 +31,9 @@ const page = async({searchParams}:Props) => {
  
   const issueCount = await prisma.issue.count({where})
   return (
-   <Flex direction="column" gap="3">
-   
+  
+        <Flex direction="column" gap="3">
+          <IssueActions/>
           <IssuesTable searchParams={searchParams} issues={issues}/>
           <Pagination 
             pageSize={pageSize}
@@ -37,6 +41,9 @@ const page = async({searchParams}:Props) => {
             itemCount={issueCount}
           />
    </Flex>
+
+ 
+   
     
   )
 }
