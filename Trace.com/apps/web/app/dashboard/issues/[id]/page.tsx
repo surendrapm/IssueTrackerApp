@@ -2,6 +2,8 @@
 import { notFound } from 'next/navigation'
 import React from 'react'
 import prisma from "@repo/database";
+import { Card, Flex, Heading, Text } from '@radix-ui/themes';
+import IssueStatusBadge from '../../../components/IssueStatusBadge';
 interface Props {
   params:{id:string}
 }
@@ -20,10 +22,14 @@ if(!issue) return notFound();
 
   return (
     <div>
-      <p>{issue.title}</p>
-      <p>{issue.description}</p>
-      <p>{issue.status}</p>
-      <p>{issue.createdAt.toDateString()}</p>
+      <Flex className="space-x-3" my="2">
+        <Heading>{issue.title}</Heading>
+        <IssueStatusBadge status={issue.status} />
+        <Text>{issue.createdAt.toDateString()}</Text>
+      </Flex>
+      <Card>
+        <p>{issue.description}</p>
+      </Card>
     </div>
   );
 }
