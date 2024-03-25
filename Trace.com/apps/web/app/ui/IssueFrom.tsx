@@ -7,7 +7,7 @@ import "easymde/dist/easymde.min.css";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Spinner from "../components/Spinner";
- 
+
 type IssueFormData = z.infer<typeof createIssueSchema>;
 type IssueFormProps = {
   createIssue: (data: IssueFormData) => Promise<void>;
@@ -57,7 +57,9 @@ export function IssueForm({ createIssue, error, isSumitting }: IssueFormProps) {
           </Text>
         )}
 
-        <Button disabled={isSumitting}>Submit new Issue {isSumitting && <Spinner />}</Button>
+        <Button disabled={isSumitting}>
+          Submit new Issue {isSumitting && <Spinner />}
+        </Button>
       </form>
     </div>
   );

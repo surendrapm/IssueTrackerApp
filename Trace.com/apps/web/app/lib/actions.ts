@@ -1,26 +1,22 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { createIssueSchema } from '../.././app/validationSchemas';
-
+import { NextRequest, NextResponse } from "next/server";
+import { createIssueSchema } from "../.././app/validationSchemas";
 
 //creating issues
-export async function CreateIssue(request:NextRequest){
-
-    const body =  await request.json();
-    const validation = createIssueSchema.safeParse(body);
-    if(!validation.success){
-     
-         return NextResponse.json(validation.error.errors,{status:400})
-    }
-   const newIssue = await prisma.issue.create({
-      data:{
-        title: body.title, 
-        description: body.description
-    }
-   })
-              console.log('successfully created issue')
-       return NextResponse.json(newIssue,{status:201})
+export async function CreateIssue(request: NextRequest) {
+  const body = await request.json();
+  const validation = createIssueSchema.safeParse(body);
+  if (!validation.success) {
+    return NextResponse.json(validation.error.errors, { status: 400 });
+  }
+  const newIssue = await prisma.issue.create({
+    data: {
+      title: body.title,
+      description: body.description,
+    },
+  });
+  console.log("successfully created issue");
+  return NextResponse.json(newIssue, { status: 201 });
 }
-
 
 //Reading a issues
 // export async function GET(response:NextResponse){
@@ -30,5 +26,5 @@ export async function CreateIssue(request:NextRequest){
 //   }catch(error){
 //       return NextResponse.json("issues not found",{status:401})
 //   }
-   
+
 // }

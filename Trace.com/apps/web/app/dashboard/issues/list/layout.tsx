@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import IssuesTable from '../../ui/IssuesTable'
+import IssuesTable from '../../../ui/IssuesTable'
 
 
 
