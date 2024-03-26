@@ -3,6 +3,7 @@ import prisma from "@repo/database";
 import { Card, Flex, Heading, Text } from "@radix-ui/themes";
 import IssueStatusBadge from "../../../components/IssueStatusBadge";
 import ReactMarkdown from "react-markdown";
+import delay from "delay";
 interface Props {
   params: { id: string };
 }
@@ -14,11 +15,12 @@ const IssueDetailPage = async ({ params }: Props) => {
 
   if (!issue) return notFound();
 
+await delay(1000)
 
   return (
     <div>
+      <Heading>{issue.title}</Heading>
       <Flex className="space-x-3" my="2">
-        <Heading>{issue.title}</Heading>
         <IssueStatusBadge status={issue.status} />
         <Text>{issue.createdAt.toDateString()}</Text>
       </Flex>

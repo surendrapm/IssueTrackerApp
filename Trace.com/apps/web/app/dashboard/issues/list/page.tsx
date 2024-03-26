@@ -19,7 +19,7 @@ interface Props{
 const page = async({searchParams}:Props) => {
 
   const issues = await prisma.issue.findMany();
-   await delay(2000)
+   await delay(1000)
   return (
     <div>
       <Table.Root variant="surface">
