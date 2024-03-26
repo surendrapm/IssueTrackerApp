@@ -1,25 +1,15 @@
-import React from 'react';
-import IssuesTable, { IssueQuery, columnNames } from '../../../ui/IssuesTable';
-import prisma from '@repo/database';
-import Status from '@repo/database';
+import { Table } from "@radix-ui/themes";
+import prisma from "@repo/database";
+import { IssueQuery } from "../../../ui/IssuesTable";
+import { IssueStatusBadge, Link } from "../../../components";
 
-import Pagination from '../../../components/Pagination';
-import { IssueActions } from './IssueActions';
-import {Table } from '@radix-ui/themes';
-import { IssueForm } from '../../../ui/IssueFrom';
-import IssueStatusBadge from '../../../components/IssueStatusBadge';
-import delay from 'delay'
-import Link from '../../../components/Link';
-
-interface Props{
-  searchParams:IssueQuery
+interface Props {
+  searchParams: IssueQuery;
 }
- 
 
-const page = async({searchParams}:Props) => {
-
+const page = async ({ searchParams }: Props) => {
   const issues = await prisma.issue.findMany();
-   await delay(1000)
+
   return (
     <div>
       <Table.Root variant="surface">
@@ -57,6 +47,6 @@ const page = async({searchParams}:Props) => {
       </Table.Root>
     </div>
   );
-}
+};
 
-export default page
+export default page;
