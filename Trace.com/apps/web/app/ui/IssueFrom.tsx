@@ -1,28 +1,53 @@
-import { TextField, Button, TextArea, Callout, Text } from "@radix-ui/themes";
-import SimpleMDE from "react-simplemde-editor";
-import { useForm, Controller } from "react-hook-form";
-import { Issue } from "@prisma/client";
-import { createIssueSchema } from "../../validationSchemas";
-import "easymde/dist/easymde.min.css";
-import { z } from "zod";
+"use client"
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Issue } from "@prisma/client";
+import { Button, Callout, Text, TextField } from "@radix-ui/themes";
+import axios from "axios";
+import "easymde/dist/easymde.min.css";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import SimpleMDE from "react-simplemde-editor";
+import { z } from "zod";
+import { createIssueSchema } from "../../validationSchemas";
 import Spinner from "../components/Spinner";
 
-type IssueFormData = z.infer<typeof createIssueSchema>;
-type IssueFormProps = {
-  createIssue: (data: IssueFormData) => Promise<void>;
-  error: any;
-  isSumitting: boolean;
+type createIssueSchemaData = z.infer<typeof createIssueSchema>;
+
+type Props = {
+  issue?:Issue
 };
 
-export function IssueForm({ createIssue, error, isSumitting }: IssueFormProps) {
+export function IssueForm({issue}: {issue?: Props}) {
+
+
+
+  const [error, setError] = useState<any>("");
+  const [isSumitting, setisSumitted] = useState<boolean>(false);
+  const router = useRouter();
+  console.log("hello");
+
+  const createIssue = async (data: createIssueSchemaData) => {
+    try {
+      setisSumitted(true);
+      const response = await axios.post("/api/issues", data);
+      router.push("/dashboard");
+      setisSumitted(false);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+      setError("An un exprected error occured");
+      console.error("Form submitting issue ", error);
+    }
+  };
+
   console.log(error);
   const {
     register,
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<IssueFormData>({
+  } = useForm<createIssueSchemaData>({
     resolver: zodResolver(createIssueSchema),
   });
 
@@ -37,7 +62,7 @@ export function IssueForm({ createIssue, error, isSumitting }: IssueFormProps) {
 
       <form className="max-w-xl space-y-3" onSubmit={handleSubmit(createIssue)}>
         <TextField.Root>
-          <TextField.Input placeholder="Title" {...register("title")} />
+          <TextField.Input defaultValue={issue?.title} placeholder="Title" {...register("title")} />
         </TextField.Root>
         {errors.title && (
           <Text color="red" as="p">
@@ -47,6 +72,7 @@ export function IssueForm({ createIssue, error, isSumitting }: IssueFormProps) {
         <Controller
           name="description"
           control={control}
+          defaultValue={issue?.description}
           render={({ field }) => (
             <SimpleMDE placeholder="Description" {...field} />
           )}
