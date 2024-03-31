@@ -1,16 +1,15 @@
 
 import React from 'react'
 import { IssueForm } from '../../../../ui'
-import prisma from '@repo/database'
 import { notFound } from 'next/navigation'
+import prisma from '@repo/database'
 
 
 interface Props{
-    params:{id: string}
+    params:{id:string}
 }
 
 const EditIssuePage = async({params}:Props) => {
-
 
   const issue = await prisma.issue.findUnique({
         where:{id:parseInt(params.id)}

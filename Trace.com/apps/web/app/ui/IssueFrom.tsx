@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Issue } from "@prisma/client";
 import { Button, Callout, Text, TextField } from "@radix-ui/themes";
@@ -12,22 +12,23 @@ import { z } from "zod";
 import { createIssueSchema } from "../../validationSchemas";
 import Spinner from "../components/Spinner";
 
-type createIssueSchemaData = z.infer<typeof createIssueSchema>;
+type IssueFormData = z.infer<typeof createIssueSchema>;
 
-type Props = {
-  issue?:Issue
-};
-
-export function IssueForm({issue}: {issue?: Props}) {
-
-
-
-  const [error, setError] = useState<any>("");
-  const [isSumitting, setisSumitted] = useState<boolean>(false);
+export function IssueForm({ issue }: { issue?: Issue }) {
+  const [error, setError] = useState("");
+  const [isSumitting, setisSumitted] = useState(false);
   const router = useRouter();
-  console.log("hello");
 
-  const createIssue = async (data: createIssueSchemaData) => {
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IssueFormData>({
+    resolver: zodResolver(createIssueSchema),
+  });
+
+  const createIssue = handleSubmit(async (data) => {
     try {
       setisSumitted(true);
       const response = await axios.post("/api/issues", data);
@@ -35,20 +36,9 @@ export function IssueForm({issue}: {issue?: Props}) {
       setisSumitted(false);
       console.log(response.data);
     } catch (error) {
-      console.log(error);
-      setError("An un exprected error occured");
-      console.error("Form submitting issue ", error);
+      setisSumitted(false);
+      setError("An unexpected error occured.");
     }
-  };
-
-  console.log(error);
-  const {
-    register,
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<createIssueSchemaData>({
-    resolver: zodResolver(createIssueSchema),
   });
 
   console.log(register("title"));
@@ -60,9 +50,13 @@ export function IssueForm({issue}: {issue?: Props}) {
         </Callout.Root>
       )}
 
-      <form className="max-w-xl space-y-3" onSubmit={handleSubmit(createIssue)}>
+      <form className="max-w-xl space-y-3" onSubmit={createIssue}>
         <TextField.Root>
-          <TextField.Input defaultValue={issue?.title} placeholder="Title" {...register("title")} />
+          <TextField.Input
+            defaultValue={issue?.title ?? undefined}
+            placeholder="Title"
+            {...register("title")}
+          />
         </TextField.Root>
         {errors.title && (
           <Text color="red" as="p">
@@ -72,7 +66,7 @@ export function IssueForm({issue}: {issue?: Props}) {
         <Controller
           name="description"
           control={control}
-          defaultValue={issue?.description}
+          defaultValue={issue?.description ?? undefined}
           render={({ field }) => (
             <SimpleMDE placeholder="Description" {...field} />
           )}
