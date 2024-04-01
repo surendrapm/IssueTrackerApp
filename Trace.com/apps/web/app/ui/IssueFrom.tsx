@@ -31,6 +31,8 @@ export function IssueForm({ issue }: { issue?: Issue }) {
   const createIssue = handleSubmit(async (data) => {
     try {
       setisSumitted(true);
+      if(issue)
+         axios.patch(`/api/issues/${issue.id}`,data)
       const response = await axios.post("/api/issues", data);
       router.push("/dashboard");
       setisSumitted(false);
@@ -78,7 +80,7 @@ export function IssueForm({ issue }: { issue?: Issue }) {
         )}
 
         <Button disabled={isSumitting}>
-          Submit new Issue {isSumitting && <Spinner />}
+          {issue?'Update Issue':'Submit new Issue'}{' '}{isSumitting && <Spinner />}
         </Button>
       </form>
     </div>
