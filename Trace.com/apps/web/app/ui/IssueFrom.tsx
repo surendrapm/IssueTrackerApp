@@ -35,6 +35,7 @@ export function IssueForm({ issue }: { issue?: Issue }) {
          axios.patch(`/api/issues/${issue.id}`,data)
       const response = await axios.post("/api/issues", data);
       router.push("/dashboard");
+      router.refresh();
       setisSumitted(false);
       console.log(response.data);
     } catch (error) {
