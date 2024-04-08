@@ -1,13 +1,4 @@
-import { Box } from '@radix-ui/themes';
-import { Skeleton } from '../../../components';
+import IssueFormSkeleton from "../_components/IssueFormSkeleton"
 
 
-const loading = () => {
-  return (
-    <Box className='max-w-xl'>
-        <Skeleton/>
-    </Box>
-  )
-}
-
-export default loading
+export default IssueFormSkeleton

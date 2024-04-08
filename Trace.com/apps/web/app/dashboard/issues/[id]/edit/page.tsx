@@ -1,9 +1,17 @@
 
 import React from 'react'
-import { IssueForm } from '../../../../ui'
 import { notFound } from 'next/navigation'
 import prisma from '@repo/database'
+import dynamic from 'next/dynamic'
+import { Skeleton } from '../../../../components';
+import IssueFormSkeleton from '../../_components/IssueFormSkeleton';
 
+const IssueForm = dynamic(
+  () => import("../../../../ui/IssueFrom").then((module) => module.default),{
+    ssr: false,
+    loading:()=><IssueFormSkeleton/>
+  }
+);
 
 interface Props{
     params:{id:string}

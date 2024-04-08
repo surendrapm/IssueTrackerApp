@@ -14,76 +14,76 @@ import Spinner from "../components/Spinner";
 
 type IssueFormData = z.infer<typeof createIssueSchema>;
 
-export function IssueForm({ issue }: { issue?: Issue }) {
-  const [error, setError] = useState("");
-  const [isSumitting, setisSumitted] = useState(false);
-  const router = useRouter();
+ export default function IssueForm({ issue }: { issue?: Issue }) {
+   const [error, setError] = useState("");
+   const [isSumitting, setisSumitted] = useState(false);
+   const router = useRouter();
 
-  const {
-    register,
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IssueFormData>({
-    resolver: zodResolver(createIssueSchema),
-  });
+   const {
+     register,
+     control,
+     handleSubmit,
+     formState: { errors },
+   } = useForm<IssueFormData>({
+     resolver: zodResolver(createIssueSchema),
+   });
 
-  const createIssue = handleSubmit(async (data) => {
-    try {
-      setisSumitted(true);
-      if(issue)
-         axios.patch(`/api/issues/${issue.id}`,data)
-      const response = await axios.post("/api/issues", data);
-      router.push("/dashboard");
-      router.refresh();
-      setisSumitted(false);
-      console.log(response.data);
-    } catch (error) {
-      setisSumitted(false);
-      setError("An unexpected error occured.");
-    }
-  });
+   const createIssue = handleSubmit(async (data) => {
+     try {
+       setisSumitted(true);
+       if (issue) axios.patch(`/api/issues/${issue.id}`, data);
+       const response = await axios.post("/api/issues", data);
+       router.push("/dashboard");
+       router.refresh();
+       setisSumitted(false);
+       console.log(response.data);
+     } catch (error) {
+       setisSumitted(false);
+       setError("An unexpected error occured.");
+     }
+   });
 
-  console.log(register("title"));
-  return (
-    <div className="max-w-xl space-y-3">
-      {error && (
-        <Callout.Root color="red">
-          <Callout.Text>{error}</Callout.Text>
-        </Callout.Root>
-      )}
+   console.log(register("title"));
+   return (
+     <div className="max-w-xl space-y-3">
+       {error && (
+         <Callout.Root color="red">
+           <Callout.Text>{error}</Callout.Text>
+         </Callout.Root>
+       )}
 
-      <form className="max-w-xl space-y-3" onSubmit={createIssue}>
-        <TextField.Root>
-          <TextField.Input
-            defaultValue={issue?.title ?? undefined}
-            placeholder="Title"
-            {...register("title")}
-          />
-        </TextField.Root>
-        {errors.title && (
-          <Text color="red" as="p">
-            {errors.title.message}
-          </Text>
-        )}
-        <Controller
-          name="description"
-          control={control}
-          defaultValue={issue?.description ?? undefined}
-          render={({ field }) => (
-            <SimpleMDE placeholder="Description" {...field} />
-          )}
-        />
-        {errors.description && (
-          <Text color="red" as="p">
-            {errors.description.message}
-          </Text>
-        )}
+       <form className="max-w-xl space-y-3" onSubmit={createIssue}>
+         <TextField.Root>
+           <TextField.Input
+             defaultValue={issue?.title ?? undefined}
+             placeholder="Title"
+             {...register("title")}
+           />
+         </TextField.Root>
+         {errors.title && (
+           <Text color="red" as="p">
+             {errors.title.message}
+           </Text>
+         )}
+         <Controller
+           name="description"
+           control={control}
+           defaultValue={issue?.description ?? undefined}
+           render={({ field }) => (
+             <SimpleMDE placeholder="Description" {...field} />
+           )}
+         />
+         {errors.description && (
+           <Text color="red" as="p">
+             {errors.description.message}
+           </Text>
+         )}
 
-        <Button disabled={isSumitting}>
-          {issue?'Update Issue':'Submit new Issue'}{' '}{isSumitting && <Spinner />}
-        </Button>
-      </form>
-    </div>
-  );
-}
+         <Button disabled={isSumitting}>
+           {issue ? "Update Issue" : "Submit new Issue"}{" "}
+           {isSumitting && <Spinner />}
+         </Button>
+       </form>
+     </div>
+   );
+ }
