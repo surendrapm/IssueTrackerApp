@@ -44,6 +44,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   const id = parseInt(params.id);
+  await setTimeout(()=>{},3000)
   const issue = await prisma.issue.findUnique({
     where: {
       id: id,
@@ -51,7 +52,8 @@ export async function DELETE(
   });
 
   // res if issue not found
-  if (!issue) return NextResponse.json({ error: "issue not found... " }, { status: 404 });
+  if (!issue)
+    return NextResponse.json({ error: "issue not found... " }, { status: 404 });
 
   console.log("deleted succesfully");
 
@@ -59,5 +61,5 @@ export async function DELETE(
     where: { id: id },
   });
 
- return NextResponse.json({ msg: "deleted issue succesfully" });
+  return NextResponse.json({ msg: "deleted issue succesfully" });
 }
