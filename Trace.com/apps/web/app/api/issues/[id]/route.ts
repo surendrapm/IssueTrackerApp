@@ -36,3 +36,28 @@ export async function PATCH(
 
   return NextResponse.json(updatedIssue);
 }
+
+//API deleting issue using Id
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const id = parseInt(params.id);
+  const issue = await prisma.issue.findUnique({
+    where: {
+      id: id,
+    },
+  });
+
+  // res if issue not found
+  if (!issue) return NextResponse.json({ error: "issue not found... " }, { status: 404 });
+
+  console.log("deleted succesfully");
+
+  await prisma.issue.delete({
+    where: { id: id },
+  });
+
+ return NextResponse.json({ msg: "deleted issue succesfully" });
+}
