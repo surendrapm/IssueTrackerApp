@@ -31,12 +31,16 @@ type IssueFormData = z.infer<typeof createIssueSchema>;
    const createIssue = handleSubmit(async (data) => {
      try {
        setisSumitted(true);
-       if (issue) axios.patch(`/api/issues/${issue.id}`, data);
-       const response = await axios.post("/api/issues", data);
-       router.push("/dashboard");
-       router.refresh();
-       setisSumitted(false);
-       console.log(response.data);
+       if (issue){
+        axios.patch(`/api/issues/${issue.id}`, data);
+        router.push("/dashboard/issues/list");
+      }else{
+           const response = await axios.post("/api/issues", data);
+           router.push("/dashboard");
+           router.refresh();
+           setisSumitted(false);
+           console.log(response.data);
+      }
      } catch (error) {
        setisSumitted(false);
        setError("An unexpected error occured.");

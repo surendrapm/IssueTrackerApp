@@ -8,7 +8,7 @@ export const IssueActions = () => {
    <Flex justify="between">
              <IssueStatusFilter/>
              <Button>
-              <Link href="new/">New Issue</Link>
+              <Link href="/dashboard/issues/new">New Issue</Link>
              </Button>
    </Flex>
     

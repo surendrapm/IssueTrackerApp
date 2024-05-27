@@ -1,7 +1,8 @@
-import { Table } from "@radix-ui/themes";
+import { Flex, Table } from "@radix-ui/themes";
 import prisma from "@repo/database";
 import { IssueQuery } from "../../../ui/IssuesTable";
 import { IssueStatusBadge, Link } from "../../../components";
+import { IssueActions } from "./IssueActions";
 
 interface Props {
   searchParams: IssueQuery;
@@ -12,6 +13,9 @@ const page = async ({ searchParams }: Props) => {
 
   return (
     <div>
+      <div>
+        <IssueActions />
+      </div>
       <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
